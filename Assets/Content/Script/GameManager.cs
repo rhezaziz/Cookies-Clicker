@@ -3,8 +3,21 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    #region get set
     public static GameManager instance;
 
+    private UIManager uiManager;
+    public UIManager UIManager
+    {
+        get
+        {
+            if(uiManager == null)
+                uiManager = GetComponent<UIManager>();
+
+            return uiManager;
+        }
+    }
+    #endregion
 
     [Header("Value")]
     public int jmlClicker;

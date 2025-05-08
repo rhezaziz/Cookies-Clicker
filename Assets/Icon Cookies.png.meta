@@ -222,7 +222,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Icon Cookies_0: -8788188848854236106
+      Icon Cookies_1: -4540607342914039501
+      Icon Cookies_2: 6406283166396981946
+      Icon Cookies_3: -4494165027543744792
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
