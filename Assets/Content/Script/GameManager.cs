@@ -17,6 +17,19 @@ public class GameManager : MonoBehaviour
             return uiManager;
         }
     }
+
+    private QuestManager questManager;
+    public QuestManager QuestManager
+    {
+        get
+        {
+            if(questManager == null)
+                questManager = GetComponent<QuestManager>();
+
+            return questManager;
+        }
+    }
+
     #endregion
 
     [Header("Value")]
@@ -40,6 +53,7 @@ public class GameManager : MonoBehaviour
     public void clicking()
     {
         jmlClicker += cookies.clicker;
+        questManager.checkQuest(cookies.clicker, QuestType.Clicking);
         updateUI();
     }
 
