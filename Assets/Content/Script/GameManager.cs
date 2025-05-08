@@ -53,14 +53,16 @@ public class GameManager : MonoBehaviour
     public void clicking()
     {
         jmlClicker += cookies.clicker;
-        questManager.checkQuest(cookies.clicker, QuestType.Clicking);
+        QuestManager.checkQuest(cookies.clicker, QuestType.Clicking);
         updateUI();
     }
 
     public void jualCookie()
     {
-        jmlPoint = jmlClicker * cookies.point;
-        jmlClicker = 0;
+        if (jmlClicker == 0) return;
+
+        jmlPoint += cookies.point;
+        jmlClicker -= 1;
         updateUI();
     }
 

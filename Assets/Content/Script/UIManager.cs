@@ -8,7 +8,6 @@ public class UIManager : MonoBehaviour
     [Header("Button")]
     public Button shop;
     public Button quest;
-    public Button close;
 
     [Header("Canvas")]
     public RectTransform panelButton;
@@ -23,7 +22,6 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         shop.onClick.AddListener(() => showPanelShop());
-        close.onClick.AddListener(() => closePanel());
     }
 
     /// <summary>
@@ -34,6 +32,7 @@ public class UIManager : MonoBehaviour
         panelButton.DOPivotX(1f, 1f);               //Animasi 
         panelShop.gameObject.SetActive(true);
         panelShop.DOPivotX(0f, 1f).SetDelay(.5f);
+        shop.interactable = false;
     }
 
 
@@ -48,6 +47,8 @@ public class UIManager : MonoBehaviour
         panelButton.DOPivotX(0f, 1f).SetDelay(.75f).OnComplete(() =>
         {
             temp.gameObject.SetActive(false);
+            shop.interactable = true;
+            quest.interactable = true;
         });
     }
 }
