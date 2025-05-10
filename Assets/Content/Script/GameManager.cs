@@ -46,26 +46,40 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #region update value Cookie & Point
+    /// <summary>
+    /// Increase jumlah cookie per click
+    /// </summary>
     public void tambahCookie()
     {
         cookie += cookies.clicker;
         questManager.ReportQuest(QuestType.JumlahCookie, cookies.clicker);
         updateUI();
     }
-
+    /// <summary>
+    /// Jual cookie
+    /// </summary>
     public void jualCookie()
     {
         if (cookie <= 0) return;
 
         point += cookies.point;
+
+        //check Quest
         questManager.ReportQuest(QuestType.JumlahPoint, cookies.point);
         questManager.ReportQuest(QuestType.Selling, 1);
 
+        // decrease jumlah cookie
         cookie --;
 
         updateUI();
     }
 
+    #endregion
+    /// <summary>
+    /// Check Jenis Item yang dibeli
+    /// </summary>
+    /// <param name="item">Jenis item</param>
     public void ApplyItemEffect(item item) 
     {
 
@@ -73,17 +87,24 @@ public class GameManager : MonoBehaviour
         item.level += 1;
         switch (item.type)
         {
-            case ItemType.UpgradeClick:
-                cookies.clicker = levelValue(item.level); 
-                break;
-            case ItemType.UpgradeSell:
-                cookies.point += levelValue(item.level); 
-                break;
-            case ItemType.UpgradeDuration:
-                cookies.durationAuto += levelValue(item.level);
-                break;
-            case ItemType.AutoClick:
 
+            // Menambah jumlah cookie yang didapatkan saat 1x click
+            case ItemType.UpgradeClick: 
+                cookies.clicker = levelValue(item.level); //update value cookie per click
+                break;
+
+            // menambah jumlah point saat dijual
+            case ItemType.UpgradeSell: 
+                cookies.point += levelValue(item.level); // update value point per click
+                break;
+
+            // menambah jumlah durasi
+            case ItemType.UpgradeDuration: 
+                cookies.durationAuto += levelValue(item.level); // update value durasi saat auto
+                break;
+
+            //Start auto click
+            case ItemType.AutoClick: 
                 StartCoroutine(AutoClick(item));
                 break;
         }
@@ -91,15 +112,25 @@ public class GameManager : MonoBehaviour
         updateUI();
     }
 
+    /// <summary>
+    /// Memperbarui value sesuai level
+    /// </summary>
+    /// <param name="level">level</param>
+    /// <returns></returns>
     private int levelValue(int level)
     {
         return level <= 10 ? level : 10 + Mathf.FloorToInt((level - 10) * 0.5f);
     }
 
+    /// <summary>
+    /// Jenis Item auto click
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     IEnumerator AutoClick(item item)
     {
         float duration = cookies.durationAuto;
-        var clickingObject = FindObjectOfType<Clicker>();
+        var clickingObject = FindObjectOfType<Clicker>(); // cari component Clicker 
         item.active = true;
         while(duration >= 0f)
         {
@@ -113,18 +144,23 @@ public class GameManager : MonoBehaviour
         OnClickerChanged?.Invoke(point);
     }
 
+    /// <summary>
+    /// Menambahkan point dari reward quest
+    /// </summary>
+    /// <param name="value"> jumlah reward yang didapatkan </param>
     public void Reward(int value)
     {
         point += value;
         updateUI();
     }
 
+    /// <summary>
+    /// Memperbarui text jumlah cookie dan jumlah point
+    /// </summary>
     void updateUI()
     {
         Cookies_Text.text = $"{cookie}";
         Point_Text.text = $"{point}";
-
-
         OnClickerChanged?.Invoke(point);
     }
 }

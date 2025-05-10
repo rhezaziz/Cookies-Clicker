@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour
 {
@@ -22,6 +21,11 @@ public class QuestManager : MonoBehaviour
         StartCoroutine(AutoRefresh());
     }
 
+    /// <summary>
+    /// check quest yang dijalankan sesuai type
+    /// </summary>
+    /// <param name="type"> type quest</param>
+    /// <param name="value"> value </param>
     public void ReportQuest(QuestType type, int value)
     {
         foreach(var temp in activeQuests)
@@ -44,6 +48,9 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// spawn list quest
+    /// </summary>
     public void initListQuest()
     {
         Shuffle(quests);
@@ -57,7 +64,10 @@ public class QuestManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// spawn dan inisiasi container quest
+    /// </summary>
+    /// <param name="quest"></param>
     void SpawnQuest(Quest quest)
     {
         var questList = Instantiate(Prefabs).GetComponent<QuestList>();
@@ -67,6 +77,10 @@ public class QuestManager : MonoBehaviour
         activeQuests.Add(questList);
     }
 
+
+    /// <summary>
+    /// Refresh semua quest
+    /// </summary>
     void RefreshQuests()
     {
         Shuffle(quests);
@@ -76,6 +90,10 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Auto refresh quest
+    /// </summary>
+    /// <returns></returns>
     IEnumerator AutoRefresh()
     {
         while (true)
@@ -85,6 +103,10 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Mengacak List Quest
+    /// </summary>
+    /// <param name="array"></param>
     void Shuffle(List<Quest> array)
     {
         int p = array.Count;
@@ -118,12 +140,17 @@ public class Quest
         isComplete = false;
     }
 
+    /// <summary>
+    /// check progress quest
+    /// </summary>
+    /// <param name="value"></param>
     public void progress(int value)
     {
         if (isComplete) return;
 
         curretnQuest += value;
         
+        // kondisi quest selesai
         if(curretnQuest >= targetQuest){
             isComplete = true;
             count++;
@@ -131,6 +158,9 @@ public class Quest
         }
     }
 
+    /// <summary>
+    /// update value reward & target sesuai banyak quest yang diselesaikan
+    /// </summary>
     void updateValue()
     {
         reward = count <= 10 ? count : 10 + Mathf.FloorToInt((count - 10) * 0.5f);

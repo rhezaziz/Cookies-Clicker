@@ -14,7 +14,9 @@ public class ShopManager : MonoBehaviour
         initListShop();
     }
 
-
+    /// <summary>
+    /// inisiasi spawn Container item
+    /// </summary>
     void initListShop()
     {
         foreach(var item in items)
@@ -30,7 +32,9 @@ public class ShopManager : MonoBehaviour
     }
 
 }
-
+/// <summary>
+/// Mengelompokkan jenis item
+/// </summary>
 public enum ItemType
 {
     UpgradeClick,
@@ -46,8 +50,13 @@ public class item
     public int level;
     public string namaItem;
     public int costItem;
-    public bool active;
+    public bool active; // Jika item berjenis Auto, maka ini sebagai kondisi
 
+
+    /// <summary>
+    /// Mengubah biaya atau harga item
+    /// </summary>
+    /// <returns></returns>
     public int currCost()
     {
         if (type == ItemType.AutoClick)

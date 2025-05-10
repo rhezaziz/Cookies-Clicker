@@ -16,6 +16,10 @@ public class QuestList : MonoBehaviour
             return curQuest;
         }
     }
+    /// <summary>
+    /// inisiasi UI Quest
+    /// </summary>
+    /// <param name="quest"></param>
     public void init(Quest quest)
     {
         curQuest = quest;
@@ -25,7 +29,9 @@ public class QuestList : MonoBehaviour
         progressText.text = $"{quest.curretnQuest}/{quest.targetQuest}";
     }
 
-
+    /// <summary>
+    /// update indikator progress quest
+    /// </summary>
     public void reportProgress()
     {
         progressText.text = $"{curQuest.curretnQuest}/{curQuest.targetQuest}";
