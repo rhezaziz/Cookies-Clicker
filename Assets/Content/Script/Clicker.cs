@@ -2,30 +2,19 @@ using UnityEngine;
 using DG.Tweening;
 public class Clicker : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public ParticleSystem particle;
-    
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnMouseDown()
     {
         animatedPress();
-        GameManager.instance.clicking();
+        GameManager.instance.tambahCookie();
     }
 
     private void OnMouseUp()
     {
         animatedUnpress();
-
+        GameManager.instance.questManager.ReportQuest(QuestType.Clicking, 1);
         particle.Play();
     }
 
@@ -37,5 +26,12 @@ public class Clicker : MonoBehaviour
     void animatedUnpress()
     {
         transform.DOScale(Vector2.one, .1f);
+    }
+
+    public void animated()
+    {
+        transform.DOKill();
+        transform.DOPunchScale(Vector3.one * -.15f, .5f, 5);
+        particle.Play();
     }
 }

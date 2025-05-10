@@ -9,23 +9,54 @@ public class ItemShop : MonoBehaviour
     public TMP_Text namaItem;
     public TMP_Text hargaItem;
     public Button btnBeli;
+    private int price;
+    private item currItem;
+
     public void init(item item)
     {
-        namaItem.text = item.namaItem;
-        hargaItem.text = item.costItem.ToString();
-        btnBeli.interactable = canBuy(item);
-        btnBeli.onClick.AddListener(() => buyItem(item));
-    }
-
-    void buyItem(item item)
-    {
-
+        currItem = item;
+        initUI();
+        btnBeli.onClick.AddListener(() => OnBuyClicked());
+        GameManager.instance.OnClickerChanged += UpdateInteractable;
     }
 
 
-    bool canBuy(item item)
+    void initUI()
     {
-        int point = GameManager.instance.jmlPoint;
-        return item.costItem >= point;
+        price = currItem.currCost();
+        namaItem.text = currItem.namaItem;
+        hargaItem.text = price.ToString();
+        btnBeli.interactable = canBuy();
+    }
+
+    public void UpdateInteractable(int currentPoint)
+    {
+        bool cooldown = currItem.type == ItemType.AutoClick && currItem.active;
+        btnBeli.interactable = currentPoint >= price && !cooldown;
+    }
+
+    private void OnBuyClicked()
+    {
+        if (GameManager.instance.GetPoint() < price)
+            return;
+
+        
+        GameManager.instance.ApplyItemEffect(currItem);
+        initUI();
+    }
+
+
+    bool canBuy()
+    {
+        int point = GameManager.instance.GetPoint();
+        return price <= point;
+    }
+
+
+
+    private void OnDestroy()
+    {
+        GameManager.instance.OnClickerChanged -= UpdateInteractable;
+        btnBeli.onClick.RemoveAllListeners();
     }
 }

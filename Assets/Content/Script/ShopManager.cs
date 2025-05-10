@@ -7,7 +7,7 @@ public class ShopManager : MonoBehaviour
     public List<item> items = new List<item>();
     public GameObject prefabItem;
     private List<ItemShop> itemShops = new List<ItemShop>();
-
+    public Transform parent;
 
     private void Start()
     {
@@ -21,35 +21,38 @@ public class ShopManager : MonoBehaviour
         {
             var itemShop = Instantiate(prefabItem).GetComponent<ItemShop>();
             
-            itemShop.gameObject.SetActive(false);
+            itemShop.gameObject.SetActive(true);
 
             itemShop.init(item);
-            
+            itemShop.transform.SetParent(parent);
             itemShops.Add(itemShop);
         }
     }
 
-
-    public void buyItem()
-    {
-        foreach(var item in itemShops)
-        {
-            item.btnBeli.interactable = false;
-        }
-    }
 }
 
-public enum itemType
+public enum ItemType
 {
-    Useable,
-    Upgradeable
+    UpgradeClick,
+    UpgradeSell,
+    UpgradeDuration,
+    AutoClick
 }
 
 [System.Serializable]
 public class item
 {
+    public ItemType type;
     public int level;
     public string namaItem;
     public int costItem;
+    public bool active;
 
+    public int currCost()
+    {
+        if (type == ItemType.AutoClick)
+            return costItem;
+
+        return Mathf.FloorToInt(costItem * Mathf.Pow(level, 2f));
+    }
 }
