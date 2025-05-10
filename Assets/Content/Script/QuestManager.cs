@@ -6,14 +6,16 @@ public class QuestManager : MonoBehaviour
 {
     private System.Random _random = new System.Random();
 
-
+    [Header("List")]
     public List<Quest> quests = new List<Quest>();
-    public List<QuestList> activeQuests = new List<QuestList>();
-    public GameObject Prefabs;
-    public Transform parent;
+    private List<QuestList> activeQuests = new List<QuestList>();
 
+    [Header("Spawn Prefabs")]
+    public GameObject Prefabs; // Prefab
+    public Transform parent; // Parent Spawn Prefab
 
-    public float refreshTime = 10;
+    [Header("Value")]
+    public float refreshTime = 3000;
 
     void Awake()
     {
@@ -36,10 +38,10 @@ public class QuestManager : MonoBehaviour
             {
                 quest.progress(value);
                 temp.reportProgress();
-
                 if (quest.isComplete)
                 {
                     GameManager.instance.Reward(quest.reward);
+                    quest.updateValue();
                     quests.Remove(quest);
                     quests.Add(quest);
                     temp.init(quests[Random.Range(3, quests.Count - 1)]);
@@ -154,17 +156,18 @@ public class Quest
         if(curretnQuest >= targetQuest){
             isComplete = true;
             count++;
-            updateValue();
+            //updateValue();
         }
     }
 
     /// <summary>
     /// update value reward & target sesuai banyak quest yang diselesaikan
     /// </summary>
-    void updateValue()
+    public void updateValue()
     {
-        reward = count <= 10 ? count : 10 + Mathf.FloorToInt((count - 10) * 0.5f);
-        targetQuest = Mathf.RoundToInt(50 * Mathf.Pow(count, 2f));
+        int temp = type == QuestType.Buying ? 1 : 50;
+        reward = Mathf.RoundToInt(reward * Mathf.Pow(count, 2f));
+        targetQuest = Mathf.RoundToInt(temp * Mathf.Pow(count, 2f));
     }
 }
 

@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
-
+    [Header("List")]
     public List<item> items = new List<item>();
-    public GameObject prefabItem;
-    private List<ItemShop> itemShops = new List<ItemShop>();
-    public Transform parent;
+
+    [Header("Spawn Prefabs")]
+    public GameObject prefabItem; // prefab
+    public Transform parent; //parent spawn object prefabs
 
     private void Start()
     {
@@ -27,7 +28,6 @@ public class ShopManager : MonoBehaviour
 
             itemShop.init(item);
             itemShop.transform.SetParent(parent);
-            itemShops.Add(itemShop);
         }
     }
 

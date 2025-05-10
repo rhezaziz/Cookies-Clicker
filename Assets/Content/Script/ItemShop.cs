@@ -9,6 +9,8 @@ public class ItemShop : MonoBehaviour
     public TMP_Text namaItem;
     public TMP_Text hargaItem;
     public Button btnBeli;
+
+    [Header("Value")]
     private int price;
     private item currItem;
 

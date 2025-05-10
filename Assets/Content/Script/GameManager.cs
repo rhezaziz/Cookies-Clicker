@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text Cookies_Text;
     public TMP_Text Point_Text;
 
+    [Header("Action")]
     public Cookies cookies = new Cookies();
     public Action<int> OnPointChanged;
     public Action<int> OnClickerChanged;
@@ -76,6 +77,8 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+
     /// <summary>
     /// Check Jenis Item yang dibeli
     /// </summary>
