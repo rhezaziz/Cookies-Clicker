@@ -21,6 +21,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private AudioManager AudioManager;
+    public AudioManager audioManager
+    {
+        get
+        {
+            if(AudioManager == null)
+                AudioManager = FindAnyObjectByType<AudioManager>();
+
+            return AudioManager;
+        }
+    }
+
     #endregion
 
     [Header("Value")]
@@ -55,6 +67,7 @@ public class GameManager : MonoBehaviour
     {
         cookie += cookies.clicker;
         questManager.ReportQuest(QuestType.JumlahCookie, cookies.clicker);
+        audioManager.playClip(audioType.Cookies);
         updateUI();
     }
     /// <summary>
@@ -69,7 +82,7 @@ public class GameManager : MonoBehaviour
         //check Quest
         questManager.ReportQuest(QuestType.JumlahPoint, cookies.point);
         questManager.ReportQuest(QuestType.Selling, 1);
-
+        audioManager.playClip(audioType.Sell);
         // decrease jumlah cookie
         cookie --;
 
@@ -111,7 +124,8 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(AutoClick(item));
                 break;
         }
-        questManager.ReportQuest(QuestType.Buying, 1); 
+        questManager.ReportQuest(QuestType.Buying, 1);
+        audioManager.playClip(audioType.Buy);
         updateUI();
     }
 
@@ -133,7 +147,7 @@ public class GameManager : MonoBehaviour
     IEnumerator AutoClick(item item)
     {
         float duration = cookies.durationAuto;
-        var clickingObject = FindObjectOfType<Clicker>(); // cari component Clicker 
+        var clickingObject = FindAnyObjectByType<Clicker>(); // cari component Clicker 
         item.active = true;
         while(duration >= 0f)
         {

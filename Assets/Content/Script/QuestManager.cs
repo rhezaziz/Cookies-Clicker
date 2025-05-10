@@ -41,6 +41,7 @@ public class QuestManager : MonoBehaviour
                 if (quest.isComplete)
                 {
                     GameManager.instance.Reward(quest.reward);
+                    GameManager.instance.audioManager.playClip(audioType.CompleteQuest);
                     quest.updateValue();
                     quests.Remove(quest);
                     quests.Add(quest);
@@ -85,6 +86,7 @@ public class QuestManager : MonoBehaviour
     /// </summary>
     void RefreshQuests()
     {
+        GameManager.instance.audioManager.playClip(audioType.ResfreshQuest);
         Shuffle(quests);
         for(int i = 0; i < activeQuests.Count; i++)
         {
