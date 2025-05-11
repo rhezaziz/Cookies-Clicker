@@ -29,12 +29,24 @@ public class ItemShop : MonoBehaviour
     /// <summary>
     /// inisiasi UI container item
     /// </summary>
-    void initUI()
+    public void initUI()
     {
+        
         price = currItem.currCost();
+        //Debug.Log(currItem.currCost());
         namaItem.text = currItem.namaItem;
         hargaItem.text = price.ToString();
         btnBeli.interactable = canBuy();
+    }
+
+    /// <summary>
+    /// Inisial UI cointainer item
+    /// </summary>
+    /// <param name="item"></param>
+    public void refreshItem(item item)
+    {
+        currItem = item;
+        initUI();
     }
 
     /// <summary>
@@ -52,10 +64,9 @@ public class ItemShop : MonoBehaviour
     /// </summary>
     private void OnBuyClicked()
     {
-        if (GameManager.instance.GetPoint() < price)
+        if (GameManager.instance.point < price)
             return;
 
-        
         GameManager.instance.ApplyItemEffect(currItem);
         initUI();
     }
@@ -66,7 +77,7 @@ public class ItemShop : MonoBehaviour
     /// <returns></returns>
     bool canBuy()
     {
-        int point = GameManager.instance.GetPoint();
+        int point = GameManager.instance.point;
         return price <= point;
     }
 

@@ -5,6 +5,7 @@ public class ShopManager : MonoBehaviour
 {
     [Header("List")]
     public List<item> items = new List<item>();
+    private List<ItemShop> tempItems = new List<ItemShop>();
 
     [Header("Spawn Prefabs")]
     public GameObject prefabItem; // prefab
@@ -28,6 +29,18 @@ public class ShopManager : MonoBehaviour
 
             itemShop.init(item);
             itemShop.transform.SetParent(parent);
+            tempItems.Add(itemShop);
+        }
+    }
+
+    /// <summary>
+    /// Resfresh semua container UI Item
+    /// </summary>
+    public void RefreshUI()
+    {
+        for(int i =  0; i < tempItems.Count; i++)
+        {
+            tempItems[i].refreshItem(items[i]);
         }
     }
 

@@ -21,6 +21,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private ShopManager ShopManager;
+    public ShopManager shopManager
+    {
+        get
+        {
+            if(ShopManager == null)
+            {
+                ShopManager = GetComponent<ShopManager>();
+            }
+
+            return ShopManager;
+        }
+    }
+
     private AudioManager AudioManager;
     public AudioManager audioManager
     {
@@ -33,14 +47,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
     #endregion
 
     [Header("Value")]
-    private int cookie;
-    private int point;
-
-    public int GetCookie() => cookie;
-    public int GetPoint() => point;
+    public int cookie;
+    public int point;
 
     [Header("UI Component")]
     public TMP_Text Cookies_Text;
@@ -57,7 +70,12 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        SaveManager.LoadGame();
     }
+
+
+    //Save Data Jika Keluar Game
+    void OnApplicationQuit() => SaveManager.SaveGame();
 
     #region update value Cookie & Point
     /// <summary>
@@ -129,6 +147,8 @@ public class GameManager : MonoBehaviour
         updateUI();
     }
 
+
+
     /// <summary>
     /// Memperbarui value sesuai level
     /// </summary>
@@ -179,6 +199,13 @@ public class GameManager : MonoBehaviour
         Cookies_Text.text = $"{cookie}";
         Point_Text.text = $"{point}";
         OnClickerChanged?.Invoke(point);
+    }
+
+    public void updateLoadUI()
+    {
+        shopManager.RefreshUI();
+        questManager.RefreshQuests();
+        updateUI();
     }
 }
 

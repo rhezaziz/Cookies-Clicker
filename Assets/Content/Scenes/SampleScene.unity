@@ -2337,6 +2337,7 @@ GameObject:
   - component: {fileID: 1013933264}
   - component: {fileID: 1013933267}
   - component: {fileID: 1013933268}
+  - component: {fileID: 1013933269}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -2356,6 +2357,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa76f34ccc743274ba50d476649bd2db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cookie: 0
+  point: 0
   Cookies_Text: {fileID: 502050501}
   Point_Text: {fileID: 40924897}
   cookies:
@@ -2392,34 +2395,39 @@ MonoBehaviour:
   quests:
   - questNama: Klik Cookie
     type: 0
-    targetQuest: 25
-    curretnQuest: 0
+    targetAmount: 25
+    currentAmount: 0
     reward: 10
     isComplete: 0
+    count: 0
   - questNama: Belanja
     type: 1
-    targetQuest: 1
-    curretnQuest: 0
+    targetAmount: 1
+    currentAmount: 0
     reward: 10
     isComplete: 0
+    count: 0
   - questNama: Jual Cookie
     type: 4
-    targetQuest: 25
-    curretnQuest: 0
+    targetAmount: 25
+    currentAmount: 0
     reward: 10
     isComplete: 0
+    count: 0
   - questNama: Dapatkan Cookie
     type: 3
-    targetQuest: 50
-    curretnQuest: 0
+    targetAmount: 0
+    currentAmount: 0
     reward: 50
     isComplete: 0
+    count: 0
   - questNama: Dapatkan Uang
     type: 2
-    targetQuest: 50
-    curretnQuest: 0
+    targetAmount: 50
+    currentAmount: 0
     reward: 50
     isComplete: 0
+    count: 0
   Prefabs: {fileID: 942852157}
   parent: {fileID: 750143623}
   refreshTime: 300
@@ -2458,6 +2466,18 @@ MonoBehaviour:
     active: 0
   prefabItem: {fileID: 1393495766}
   parent: {fileID: 1389732057}
+--- !u!114 &1013933269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013933263}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edeaf7194219f014cbf0a51de223a57e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1144099919
 GameObject:
   m_ObjectHideFlags: 0
@@ -2645,7 +2665,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

@@ -26,7 +26,7 @@ public class QuestList : MonoBehaviour
         quest.init();
         questName.text = quest.questNama;
         rewardText.text = $"reward : {quest.reward}";
-        progressText.text = $"{quest.curretnQuest}/{quest.targetQuest}";
+        progressText.text = $"{quest.currentAmount}/{quest.targetAmount}";
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public class QuestList : MonoBehaviour
     /// </summary>
     public void reportProgress()
     {
-        progressText.text = $"{curQuest.curretnQuest}/{curQuest.targetQuest}";
+        progressText.text = $"{curQuest.currentAmount}/{curQuest.targetAmount}";
     }
 }
 

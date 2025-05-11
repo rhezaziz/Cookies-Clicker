@@ -17,7 +17,7 @@ public class QuestManager : MonoBehaviour
     [Header("Value")]
     public float refreshTime = 3000;
 
-    void Awake()
+    void Start()
     {
         initListQuest();
         StartCoroutine(AutoRefresh());
@@ -54,7 +54,7 @@ public class QuestManager : MonoBehaviour
     /// <summary>
     /// spawn list quest
     /// </summary>
-    public void initListQuest()
+    void initListQuest()
     {
         Shuffle(quests);
 
@@ -84,9 +84,9 @@ public class QuestManager : MonoBehaviour
     /// <summary>
     /// Refresh semua quest
     /// </summary>
-    void RefreshQuests()
+    public void RefreshQuests()
     {
-        GameManager.instance.audioManager.playClip(audioType.ResfreshQuest);
+        
         Shuffle(quests);
         for(int i = 0; i < activeQuests.Count; i++)
         {
@@ -102,7 +102,9 @@ public class QuestManager : MonoBehaviour
     {
         while (true)
         {
+
             yield return new WaitForSeconds(refreshTime);
+            GameManager.instance.audioManager.playClip(audioType.ResfreshQuest);
             RefreshQuests();
         }
     }
@@ -131,16 +133,16 @@ public class Quest
     public string questNama;
     public QuestType type;
 
-    public int targetQuest;
-    public int curretnQuest;
+    public int targetAmount;
+    public int currentAmount;
     public int reward;
     public bool isComplete;
 
 
-    private int count;
+    public int count;
     public void init()
     {
-        curretnQuest = 0;
+        currentAmount = 0;
         isComplete = false;
     }
 
@@ -152,10 +154,10 @@ public class Quest
     {
         if (isComplete) return;
 
-        curretnQuest += value;
+        currentAmount += value;
         
         // kondisi quest selesai
-        if(curretnQuest >= targetQuest){
+        if(currentAmount >= targetAmount){
             isComplete = true;
             count++;
             //updateValue();
@@ -169,7 +171,7 @@ public class Quest
     {
         int temp = type == QuestType.Buying ? 1 : 50;
         reward = Mathf.RoundToInt(reward * Mathf.Pow(count, 2f));
-        targetQuest = Mathf.RoundToInt(temp * Mathf.Pow(count, 2f));
+        targetAmount = Mathf.RoundToInt(temp * Mathf.Pow(count, 2f));
     }
 }
 
